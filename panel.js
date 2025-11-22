@@ -2727,4 +2727,45 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // Context Menu - Explain with AI
+    const ctxExplainAi = document.getElementById('ctx-explain-ai');
+    if (ctxExplainAi) {
+        ctxExplainAi.addEventListener('click', async () => {
+            const apiKey = localStorage.getItem('anthropic_api_key');
+            const model = localStorage.getItem('anthropic_model') || 'claude-3-5-sonnet-20241022';
+
+            if (!apiKey) {
+                alert('Please configure your Anthropic API Key in Settings first.');
+                settingsModal.style.display = 'block';
+                contextMenu.classList.remove('show');
+                return;
+            }
+
+            const selection = window.getSelection().toString();
+            if (!selection.trim()) {
+                alert('Please select some text to explain.');
+                contextMenu.classList.remove('show');
+                return;
+            }
+
+            contextMenu.classList.remove('show');
+            explanationModal.style.display = 'block';
+            explanationContent.innerHTML = '<div class="loading-spinner">Generating explanation for selection...</div>';
+
+            try {
+                const prompt = `Explain this specific part of an HTTP request/response:\n\n"${selection}"\n\nProvide context on what it is, how it's used, and any security relevance.`;
+
+                await streamExplanationFromClaude(apiKey, model, prompt, (text) => {
+                    if (typeof marked !== 'undefined') {
+                        explanationContent.innerHTML = marked.parse(text);
+                    } else {
+                        explanationContent.innerHTML = `<pre style="white-space: pre-wrap; font-family: sans-serif;">${text}</pre>`;
+                    }
+                });
+            } catch (error) {
+                explanationContent.innerHTML = `<div style="color: var(--error-color); padding: 20px;">Error: ${error.message}</div>`;
+            }
+        });
+    }
+
 });
