@@ -384,10 +384,11 @@ body {
 
 .modal-content {
     background-color: var(--sidebar-bg);
-    margin: 10% auto;
+    margin: 5% auto;
     padding: 0;
     border: 1px solid var(--border-color);
     width: 500px;
+    max-height: 90vh;
     border-radius: 6px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     display: flex;
@@ -400,6 +401,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-shrink: 0;
 }
 
 .modal-header h3 {
@@ -410,13 +412,16 @@ body {
 .close-modal {
     background: none;
     border: none;
-    color: #9aa0a6;
-    font-size: 20px;
+    color: var(--text-color);
+    font-size: 24px;
     cursor: pointer;
 }
 
 .modal-body {
     padding: 15px;
+    overflow-y: auto;
+    flex: 1;
+    min-height: 0;
 }
 
 .modal-footer {
@@ -424,6 +429,7 @@ body {
     border-top: 1px solid var(--border-color);
     display: flex;
     justify-content: flex-end;
+    flex-shrink: 0;
 }
 
 .form-group {
