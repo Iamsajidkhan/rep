@@ -281,8 +281,10 @@ export function updatePreview(rawResponse) {
     // Update sandbox attribute based on checkbox
     const allowScripts = allowScriptsCheckbox && allowScriptsCheckbox.checked;
     if (allowScripts) {
-        iframe.setAttribute('sandbox', 'allow-forms allow-same-origin allow-scripts');
+        // Allow scripts, popups (for links), and top-navigation (for form submissions)
+        iframe.setAttribute('sandbox', 'allow-forms allow-same-origin allow-scripts allow-popups allow-top-navigation-by-user-activation');
     } else {
+        // Default: only allow forms and same-origin (no scripts, no popups)
         iframe.setAttribute('sandbox', 'allow-forms allow-same-origin');
     }
 
