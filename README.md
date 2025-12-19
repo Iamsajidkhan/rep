@@ -82,6 +82,7 @@ rep+ is a lightweight Chrome DevTools extension inspired by Burp Suite's Repeate
   - Powered by [Kingfisher](https://github.com/mongodb/kingfisher) rules for comprehensive secret detection
   - Supports AWS, GitHub, Google, Slack, Stripe, Twilio, Azure, and many more service providers
   - Rules stored locally in `rules/` directory for offline use
+  - **Note**: Secret scanning only analyzes JavaScript files from the **current inspected tab**.
 - Endpoint Extractor: full URLs, relative paths, GraphQL; method detection; one-click copy (rebuilds base URL).
 - Response Search: regex support, match preview, pagination, domain filter.
 
@@ -164,6 +165,10 @@ The secret scanner detects secrets from major services including:
 2. **Auto-Discovery**: Rules are automatically loaded from YAML files
 3. **Pattern Matching**: Uses PCRE-compatible regex patterns with entropy validation
 4. **Validation**: Checks pattern requirements (min digits, uppercase, lowercase, etc.)
+
+### Limitations
+
+⚠️ **Current Tab Only**: Secret scanning only analyzes JavaScript files from the **current inspected tab**. To scan secrets from multiple tabs, open DevTools on each tab individually and run the scan.
 
 ### Adding Custom Rules
 
